@@ -1,2 +1,17 @@
 # swe-holiday-prompt.zsh
-Emojis of Swedish holidays in your Zsh prompt
+Adds an Emojis to you Zsh prompt if the current day is a national Swedish holiday
+
+![](screenshots/national-day.png)
+
+## Installation
+Download to `~/.zsh/swe-holiday-prompt.zsh`
+```bash
+curl -LSso https://raw.githubusercontent.com/amimof/swe-holiday-prompt.zsh/main/README.md --create-dirs ~/.zsh/swe-holiday-prompt.zsh
+```
+Put this in your `.zshrc`
+```bash
+[ -f ~/.zsh/swe-holiday-prompt.zsh ] && source ~/.zsh/swe-holiday-prompt.zsh
+```
+
+## Can I add custom dates?
+Open up `swe-holiday-prompt.zsh` and add a range of dates with `_add_range()`
