@@ -22,17 +22,39 @@ setopt PROMPT_SUBST
 # The format of the map key (date) should be `date +"%m%d"`
 typeset -A holidays
 
+# Helper function to calculate the start and end timestamps based on OS
+# Check for MacOS and if it isn't assume it's Linux
+_calculate_range() {
+  if [ "$(uname)" = "Darwin" ]; then
+    echo $(date -j -f "%Y%m%d" $1 "+%s")
+  else
+    echo $(date -d "$1" "+%s")
+  fi
+}
+
+# Helper function to convert a timestamp to a month-day key based on OS
+# Check for MacOS and if it isn't assume it's Linux
+_convert_to_key() {
+  if [ "$(uname)" = "Darwin" ]; then
+    echo $(date -j -f "%s" $1 "+%m%d")
+  else
+    echo $(date -d "@$1" "+%m%d")
+  fi
+}
+
 # Adds a range of dates to the map of emojis. Takes 3 arguments
 # _add_range <start> <end> <emoji>
 _add_range() {
   _year=$(date +"%Y")
-  _starts=$(date -j -f "%Y%m%d" $_year$1 "+%s")
-  _ends=$(date -j -f "%Y%m%d" $_year$2 "+%s")
   _icon=$3
-  _count=$((($_ends-$_starts)/86400+1))
+
+  _starts=$(_calculate_range "${_year}$1")
+  _ends=$(_calculate_range "${_year}$2")
+  _count=$((($_ends - $_starts) / 86400 + 1))
+
   for i in $(seq $_count); do
-    _add_starts=$(($_starts+86400*($i-1)))
-    _key=$(date -j -f "%s" $_add_starts +"%m%d")
+    _add_starts=$(($_starts + 86400 * (i - 1)))
+    _key=$(_convert_to_key $_add_starts)
     holidays[$_key]=$_icon
   done
 }
@@ -65,7 +87,7 @@ _add_range 0601 0605 🌼
 _add_range 0606 0607 🇸🇪
 
 # Midsommar (hela juni)
-_add_range 0608 0631 ☀️
+_add_range 0608 0630 ☀️
 
 # Alla helgons dag (månadsskiftet oktober-november)
 _add_range 1030 1102 👻
