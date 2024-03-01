@@ -42,8 +42,8 @@ _convert_to_key() {
   fi
 }
 
-# Adds a range of dates to the map of emojis. Takes 3 arguments
-# _add_range <start> <end> <emoji>
+# Adds a range of dates to the map of emojis. Takes 4 arguments
+# _add_range <start> <end> <emoji> <description>
 _add_range() {
   _year=$(date +"%Y")
   _icon=$3
