@@ -87,7 +87,7 @@ swe_prompt() {
   d=$(date +"%m%d")
   prompt="${holidays[$d]}"
   if [ ! -z $prompt ]; then
-    prompt+="  "
+    prompt+=" "
   fi
   print "${prompt}"
 }

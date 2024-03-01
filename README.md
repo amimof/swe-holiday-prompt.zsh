@@ -6,7 +6,7 @@ Adds an Emojis to you Zsh prompt if the current day is a national Swedish holida
 ## Installation
 Download to `~/.zsh/swe-holiday-prompt.zsh`
 ```bash
-curl -LSso https://raw.githubusercontent.com/amimof/swe-holiday-prompt.zsh/main/README.md --create-dirs ~/.zsh/swe-holiday-prompt.zsh
+curl -LSso ~/.zsh/swe-holiday-prompt.zsh --create-dirs https://raw.githubusercontent.com/amimof/swe-holiday-prompt.zsh/main/swe-holiday-prompt.zsh
 ```
 Put this in your `.zshrc`
 ```bash
