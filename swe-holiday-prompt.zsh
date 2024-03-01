@@ -47,6 +47,7 @@ _convert_to_key() {
 _add_range() {
   _year=$(date +"%Y")
   _icon=$3
+  _description=$4
 
   _starts=$(_calculate_range "${_year}$1")
   _ends=$(_calculate_range "${_year}$2")
@@ -55,62 +56,73 @@ _add_range() {
   for i in $(seq $_count); do
     _add_starts=$(($_starts + 86400 * (i - 1)))
     _key=$(_convert_to_key $_add_starts)
-    holidays[$_key]=$_icon
+    holidays[$_key]="$_icon|$_description"
   done
 }
 
 # New year
-_add_range 0101 0102 🤢
+_add_range 0101 0102 🤢 "Nyårsdagen"
 
 # Easter
-_add_range 0322 0425 🐣
+_add_range 0322 0425 🐣 "Påsk"
 
 # TODO: Fettisdagen (tisdagen efter fastlagssöndagen) 🥯
 
 # Våffeldagen
-_add_range 0325 0326 🧇
+_add_range 0325 0326 🧇 "Våffeldagen - nom nom!"
 
 # Valborgsmässoafton
-_add_range 0430 0430 🔥
+_add_range 0430 0430 🔥 "Valborgsmässoafton"
 
 # 1a Maj
-_add_range 0430 0430 🟥
+_add_range 0430 0430 🟥 "1a Maj"
 
 # TODO: Kristi himmelfärdsdag (40 dagar efter påsk) 🕊️
 
 # TODO: Pingst (10 dagar efter kristi himmelfärdsdagen) ✝️
 
 # Midsommar (hela juni)
-_add_range 0601 0605 🌼
+_add_range 0601 0605 🌼 "Midsommar"
 
 # Sveriges nationaldag
-_add_range 0606 0607 🇸🇪
+_add_range 0606 0607 🇸🇪 "Nationaldagen"
 
 # Midsommar (hela juni)
-_add_range 0608 0630 ☀️
+_add_range 0608 0630 ☀️ "Midsommar"
 
 # Alla helgons dag (månadsskiftet oktober-november)
-_add_range 1030 1102 👻
+_add_range 1030 1102 👻 "Alla helgons dag"
 
 # Advent (slutet av november-december)
-_add_range 1130 1201 🕯️
+_add_range 1130 1201 🕯️ "Advent (of code?)"
 
 # Lucia
-_add_range 1213 1213 👸
+_add_range 1213 1213 👸 "Lucia"
 
 # Christmas
-_add_range 1214 1223 🎄
-_add_range 1224 1225 🎁 
-_add_range 1226 1229 🎄
-_add_range 1230 1230 🥳
+_add_range 1214 1223 🎄 "Jul"
+_add_range 1224 1225 🎁 "Jul"
+_add_range 1226 1229 🎄 "Strålande jul"
+_add_range 1230 1230 🥳 "Nyårsafton"
+
+# Print which holiday it is
+swe_holiday() {
+  d=$(date +"%m%d")
+  h=${holidays[$d]}
+  desc=${h#*|}
+
+  print $desc
+}
 
 # Main func
 swe_prompt() {
   d=$(date +"%m%d")
-  prompt="${holidays[$d]}"
+  h=${holidays[$d]}
+  e=${h%%|*}
+
+  prompt=$e
   if [ ! -z $prompt ]; then
     prompt+=" "
   fi
   print "${prompt}"
 }
-
