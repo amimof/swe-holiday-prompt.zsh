@@ -1,7 +1,7 @@
 #
 # Stylizes your Zsh prompt by adding emojis to it whenever there is a Swedish holiday.
 #
-# To use, add the following to ~/.zshr
+# To use, add the following to ~/.zshrc
 #   [ -f ~/.zsh/swe-holiday-prompt.zsh ] && source ~/.zsh/swe-holiday-prompt.zsh
 #
 autoload -U colors && colors
@@ -18,7 +18,7 @@ setopt PROMPT_SUBST
     && NEWPROMPT+=$PROMPT \
     && PROMPT=$NEWPROMPT
 
-# The hash map holding they dates and respective icon. map[date]=emoji
+# The hash map holding the dates and respective icon. map[date]=emoji
 # The format of the map key (date) should be `date +"%m%d"`
 typeset -A holidays
 
@@ -89,6 +89,9 @@ _add_range 0606 0607 🇸🇪 "Nationaldagen"
 
 # Midsommar (hela juni)
 _add_range 0608 0630 ☀️ "Midsommar"
+
+# My birthday
+_add_range 1022 1022 🧔🏽‍♂️
 
 # Alla helgons dag (månadsskiftet oktober-november)
 _add_range 1030 1102 👻 "Alla helgons dag"
