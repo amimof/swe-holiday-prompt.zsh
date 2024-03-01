@@ -25,7 +25,7 @@ typeset -A holidays
 # Helper function to calculate the start and end timestamps based on OS
 # Check for MacOS and if it isn't assume it's Linux
 _calculate_range() {
-  if [ "$(uname)" = "Darwin" ]; then
+  if [ "$(uname)" = "Darwin" ] || [ "$(uname)" = "FreeBSD" ]; then
     echo $(date -j -f "%Y%m%d" $1 "+%s")
   else
     echo $(date -d "$1" "+%s")
@@ -35,7 +35,7 @@ _calculate_range() {
 # Helper function to convert a timestamp to a month-day key based on OS
 # Check for MacOS and if it isn't assume it's Linux
 _convert_to_key() {
-  if [ "$(uname)" = "Darwin" ]; then
+  if [ "$(uname)" = "Darwin" ] || [ "$(uname)" = "FreeBSD" ]; then
     echo $(date -j -f "%s" $1 "+%m%d")
   else
     echo $(date -d "@$1" "+%m%d")
